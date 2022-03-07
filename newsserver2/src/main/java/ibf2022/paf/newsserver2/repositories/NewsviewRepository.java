@@ -2,7 +2,9 @@ package ibf2022.paf.newsserver2.repositories;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,7 @@ public class NewsviewRepository {
 	@Transactional
 	public void setUser(String name, String email, String nickname) {
 
-		final SqlRowSet rs = template.queryForRowSet(SQL.SQL_GET_USER_BY_NAME_AND_EMAIL);
+		final SqlRowSet rs = template.queryForRowSet(SQL.SQL_GET_USER_COUNT_BY_NAME_AND_EMAIL, name, email);
 		rs.next();
 		int userCount = rs.getInt(1);
 
@@ -58,4 +60,49 @@ public class NewsviewRepository {
 			template.update(SQL.SQL_INSERT_USER, UUID.randomUUID().toString(), email, name, nickname);
 		}
 	}
+
+	@Transactional
+	public Optional<Article> getArticleById(String id) {
+		final SqlRowSet rs = template.queryForRowSet(SQL.SQL_GET_ARTICLE_COUNT_BY_ID, id);
+		rs.next();
+		int articleCount = rs.getInt(1);
+
+		if (articleCount <= 0) {
+			return Optional.empty();
+		}
+		final SqlRowSet rs1 = template.queryForRowSet(SQL.SQL_GET_ARTICLE_BY_ID, id);
+		rs.next();
+		Article article = new Article();
+		article.setAuthor(rs.getString("author"));
+		article.setDescription(rs.getString("description"));
+		article.setId(id);
+		article.setImagePath(rs.getString("image_path"));
+		article.setPublishedDate(rs.getString("uploaded_at"));
+		article.setTitle(rs.getString("title"));
+		article.setUrlPath(rs.getString("url"));
+		article.setWebsite(rs.getString("website"));
+
+		return Optional.ofNullable(article);
+	}
+
+	public Optional<List<String>> getFavArticleIds(String email) {
+		final SqlRowSet rs = template.queryForRowSet(SQL.SQL_GET_FAV_ARTICLE_IDS_BY_EMAIL, email);
+		List<String> ids = new ArrayList<>();
+		while (rs.next()) {
+			ids.add(rs.getString("id"));
+		}
+		if (ids.isEmpty()) {
+			return Optional.empty();
+		}
+		return Optional.ofNullable(ids);
+	}
+
+	public void deleteFavArticle(String id, String email) {
+		int rowsDeleted = template.update(SQL.SQL_DELETE_FAV_ARTICLE_BY_ID_AND_EMAIL, id, email);
+	}
+
+	public void addFavArticle(String id, String email) {
+		int rowsAdded = template.update(SQL.SQL_INSERT_FAV_ARTICLE, email, id);
+	}
+
 }

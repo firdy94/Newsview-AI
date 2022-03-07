@@ -5,9 +5,9 @@
             <span class="ml-3 text-xl text-black p-2">Newsview AI</span>
         </a>
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Use cases</a>
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Usage</a>
             <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/search']">Search</a>
-            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/favourites']">Favourites</a>
             <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/query']">Query</a>
 
         </nav>
@@ -40,7 +40,9 @@
                 <h4 class="text-xl font-semibold">{{item.title.slice(0,30)}}...</h4>
                 <h2 class="text-xl font-semibold">{{item.author}}</h2>
                 <p class="text-sm">{{item.description.slice(0,100)}}...</p>
-                <a class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" (click)="onReadArticle(item.id)">Read Article</a>
+                <button class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" type="button" (click)="onReadArticle(item.id)">Read Article</button>
+                <button class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" type="button" (click)="onFavArticle(item.id)">Add to favourites</button>
+
             </div>
         </div>
     </div>

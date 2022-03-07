@@ -2,6 +2,7 @@ package ibf2022.paf.newsserver2.service;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+	@Value("${SPRING_MAIL_USERNAME}")
+	private String username;
+
+	@Value("${SPRING_MAIL_PASSWORD}")
+	private String password;
+
+	@Value("${spring.mail.host}")
+	private String host;
+
 	public void sendEmail(String to, String body, String topic) {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost(System.getenv("GMAIL_HOST"));
+		mailSender.setHost(host);
 		mailSender.setPort(587);
 
-		mailSender.setUsername(System.getenv("GMAIL_USER"));
-		mailSender.setPassword(System.getenv("GMAILPASS"));
+		mailSender.setUsername(username);
+		mailSender.setPassword(password);
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");

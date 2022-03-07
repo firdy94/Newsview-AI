@@ -1,5 +1,6 @@
 package ibf2022.paf.newsserver2.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -112,7 +113,12 @@ public class Controller {
 
 	@GetMapping("/login")
 	public ResponseEntity<String> getArticles(@RequestHeader("authorization") String header) {
-		newsviewSvc.saveUser(header);
+		try {
+			newsviewSvc.saveUser(header);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
 
 		List<Article> articlesArray = new ArrayList<>();
 		String jsonResp = "";
@@ -130,19 +136,6 @@ public class Controller {
 		return ResponseEntity.ok(jsonResp);
 	}
 
-	// @GetMapping("/private")
-	// public Message privateEndpoint() {
-	// return new Message("All good. You can see this because you are
-	// Authenticated.", "Hello");
-	// }
-
-	// @GetMapping("/private-scoped")
-	// public ResponseEntity<String> privateScopedEndpoint() {
-	// return ResponseEntity.ok(
-	// "All good. You can see this because you are Authenticated with a Token
-	// granted the 'admin' scope");
-	// }
-
 	@PostMapping("/query")
 	public ResponseEntity<String> sendEmail(@RequestBody MultiValueMap<String, String> data) {
 
@@ -154,6 +147,63 @@ public class Controller {
 				.formatted(name, query);
 		emailSvc.sendEmail(email, reply, subject);
 		return ResponseEntity.ok("query received");
+	}
+
+	@GetMapping("/favourites/get")
+	public ResponseEntity<String> getFavourites(@RequestHeader String header) {
+
+		String email;
+		try {
+			email = newsviewSvc.getUserEmail(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
+		if (newsviewRepo.getFavArticleIds(email).isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		List<Article> articles = new ArrayList<>();
+
+		for (String id : newsviewRepo.getFavArticleIds(email).get()) {
+			if (newsviewRepo.getArticleById(id).isEmpty()) {
+				if (newsviewMongoRepo.findById(id).isPresent()) {
+					articles.add(newsviewMongoRepo.findById(id).get());
+				}
+			}
+			articles.add(newsviewRepo.getArticleById(id).get());
+		}
+		String jsonResp = Article.createJsonObject(articles).toString();
+		return ResponseEntity.ok(jsonResp);
+	}
+
+	@GetMapping("/favourites/delete")
+	public ResponseEntity<String> deleteFavourite(@RequestHeader String header, @RequestParam String id) {
+
+		String email = "";
+		try {
+			email = newsviewSvc.getUserEmail(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
+		if (newsviewRepo.getFavArticleIds(email).isEmpty()) {
+			return ResponseEntity.badRequest().build();
+		}
+		newsviewRepo.deleteFavArticle(id, email);
+		return ResponseEntity.ok("deleted");
+	}
+
+	@GetMapping("/favourites/add/{id}")
+	public ResponseEntity<String> addFavourite(@RequestHeader String header, @PathVariable String id) {
+		String email = "";
+		try {
+			email = newsviewSvc.getUserEmail(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
+		newsviewRepo.addFavArticle(id, email);
+		return ResponseEntity.ok("Favourite added");
 	}
 
 }

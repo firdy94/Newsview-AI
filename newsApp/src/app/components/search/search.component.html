@@ -6,8 +6,9 @@
         </a>
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
             <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['']">Home</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/favourites']">Favourites</a>
             <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Use Cases</a>
-            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/query']">Query</a>
         </nav>
     </div>
     <div>Search</div>
@@ -20,7 +21,7 @@
             <div class="flex w-full justify-center items-end">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
-                        <label for="hero-field" class="leading-7 text-sm text-gray-600">Placeholder</label>
+                        <label for="hero-field" class="leading-7 text-sm text-gray-600">Query</label>
                         <input type="text" id="hero-field" name="hero-field" class="w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     </div>
                     <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit" [disabled]="form.invalid">Button</button>

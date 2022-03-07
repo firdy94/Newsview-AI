@@ -10,7 +10,7 @@ import { Article, ArticleAnalysis, message } from "./models";
 export class NewsService {
 
     constructor(private http: HttpClient) { }
-
+    //TODO add /secure later if can
     getNews(): Promise<Article[]> {
         let observ = lastValueFrom(this.http.get<Article[]>(`https://newsview-ai.herokuapp.com/api/login`));
         console.log(observ);
@@ -32,6 +32,25 @@ export class NewsService {
         let httpP = new HttpParams()
             .append("query", query)
         let observ = lastValueFrom(this.http.get<[ArticleAnalysis[], ArticleAnalysis[]]>(`https://newsview-ai.herokuapp.com/api/search`, { params: httpP }));
+        console.log(observ);
+        return observ;
+    }
+
+    getFavArticles(): Promise<Article[]> {
+        let observ = lastValueFrom(this.http.get<any>(`https://newsview-ai.herokuapp.com/api/favourites/get`));
+        console.log(observ);
+        return observ;
+    }
+
+    deleteFavArticle(id: string) {
+        let httpP = new HttpParams()
+            .append("id", id)
+        let observ = lastValueFrom(this.http.get<any>(`https://newsview-ai.herokuapp.com/api/favourites/delete`, { params: httpP }));
+        console.log(observ);
+        return observ;
+    }
+    addFavArticles(id: string): Promise<Article[]> {
+        let observ = lastValueFrom(this.http.get<any>(`https://newsview-ai.herokuapp.com/api/favourites/add/${id}`));
         console.log(observ);
         return observ;
     }

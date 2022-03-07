@@ -86,7 +86,7 @@ public class NewsviewService {
 		return article;
 	}
 
-	public void saveUser(String header) {
+	public void saveUser(String header) throws IOException {
 		String token = header.split(" ")[1];
 		String[] split_string = token.split("\\.");
 		// String base64EncodedHeader = split_string[0];
@@ -101,8 +101,22 @@ public class NewsviewService {
 			String email = data.getString("http://newsview/email");
 			String nickname = data.getString("http://newsview/nickname");
 			newsviewRepo.setUser(name, email, nickname);
-		} catch (IOException e) {
-			e.printStackTrace();
+		}
+	}
+
+	public String getUserEmail(String header) throws IOException {
+		String token = header.split(" ")[1];
+		String[] split_string = token.split("\\.");
+		// String base64EncodedHeader = split_string[0];
+		String base64EncodedBody = split_string[1];
+		// String base64EncodedSignature = split_string[2];
+
+		String body = new String(Base64.getDecoder().decode(base64EncodedBody));
+		try (InputStream is = new ByteArrayInputStream(body.getBytes())) {
+			JsonReader reader = Json.createReader(is);
+			JsonObject data = reader.readObject();
+			String email = data.getString("http://newsview/email");
+			return email;
 		}
 	}
 }

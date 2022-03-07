@@ -2,7 +2,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { SearchComponent } from './components/search/search.component';
 import { ResultComponent } from './components/result/result.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
@@ -16,9 +15,7 @@ import { AuthModule } from '@auth0/auth0-angular';
 
 import { NewsService } from './new.service';
 import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
 import { UsecaseComponent } from './components/usecase/usecase.component';
-import { RegisterComponent } from './components/register/register.component';
 import { ArticlesComponent } from './components/articles/articles.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 import { AuthGuardService } from './authguard.service';
@@ -28,7 +25,6 @@ import { QueryComponent } from './components/query/query.component';
 const appRoutes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuardService] },
   { path: "search", component: SearchComponent, canActivate: [AuthGuard] },
-  { path: "about", component: AboutComponent },
   { path: "usecases", component: UsecaseComponent },
   { path: "landingpage", component: LandingpageComponent, canActivate: [AuthGuard] },
   { path: "query", component: QueryComponent },
@@ -40,14 +36,11 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     SearchComponent,
     ResultComponent,
     FavoritesComponent,
     HomeComponent,
-    AboutComponent,
     UsecaseComponent,
-    RegisterComponent,
     ArticlesComponent,
     LandingpageComponent,
     QueryComponent

@@ -34,4 +34,9 @@ export class ResultComponent implements OnInit {
     this.router.navigate(['/article', i]);
   }
 
+  onFavArticle(i: string) {
+    this.newsSvc.addFavArticles(i);
+    alert("Added to favourites!");
+  }
+
 }
