@@ -1,0 +1,31 @@
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="assets/images/brain.png" class="w-auto h-14 text-black p-2">
+            <span class="ml-3 text-xl text-black p-2">Newsview AI</span>
+        </a>
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['']">Home</a>
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Use Cases</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
+        </nav>
+    </div>
+    <div>Search</div>
+</header>
+<section class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
+        <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600">
+        <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Search for news by entering a keyword related to your topic of interest.</h1>
+            <div class="flex w-full justify-center items-end">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
+                        <label for="hero-field" class="leading-7 text-sm text-gray-600">Placeholder</label>
+                        <input type="text" id="hero-field" name="hero-field" class="w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit" [disabled]="form.invalid">Button</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

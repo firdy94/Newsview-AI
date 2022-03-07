@@ -1,0 +1,86 @@
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center bg-slate-700 rounded-b">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="assets/images/brain.png" class="w-auto h-14 text-white p-2">
+            <span class="ml-3 text-xl text-white p-2">Newsview AI</span>
+        </a>
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['']">Home</a>
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['/usecases']">Use cases</a>
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['/search']">Search</a>
+            <a class=" mr-5 hover:text-white text-slate-300 " [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-white text-slate-300 " [routerLink]="[ '/query']">Query</a>
+
+        </nav>
+    </div>
+</header>
+<Button type="button" onclick="history.back()">Back</Button>
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap">
+        <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
+            <div class="w-full sm:p-4 px-4 mb-6">
+                <h1 class="title-font font-medium text-xl mb-2 text-gray-900">{{article.title}}</h1>
+            </div>
+            <hr>
+            <div class="w-full sm:p-4 px-4 mb-6">
+                <h2 class="title-font font-medium text-xl mb-2 text-gray-900">Sentiment Analysis</h2>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <h2 class="title-font font-medium text-3xl text-gray-900">{{article.sentimentAnalysis.sentiment.label}}, {{article.sentimentAnalysis.sentiment.score*100}}
+                </h2>
+                <p class="leading-relaxed">Sentiments</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <div *ngFor="let item of article.sentimentAnalysis.keywords">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.text}}, {{item.emotion}}, {{item.score}}
+                    </h2>
+                </div>
+                <p class="leading-relaxed">Keywords</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <div *ngFor="let item of article.sentimentAnalysis.categories">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.label}}, {{item.score}}</h2>
+                </div>
+                <p class="leading-relaxed">Categories</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <div *ngFor="let item of article.sentimentAnalysis.entities">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.type}},{{item.text}}, {{item.confidence}}, {{item.emotion}}, {{item.results.score}} </h2>
+                </div>
+                <p class="leading-relaxed">Entities</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2" *ngIf="article.sentimentAnalysis.targets!=null">
+                <div *ngFor="let item of article.sentimentAnalysis.targets">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.text}},{{item.emotion}}</h2>
+                </div>
+                <p class="leading-relaxed">Targets</p>
+            </div>
+            <hr>
+            <div class="w-full sm:p-4 px-4 mb-6">
+                <h1 class="title-font font-medium text-xl mb-2 text-gray-900">Tone Anaysis</h1>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <div *ngFor="let item of article.tonesAnalysis.documentTone.toneScores">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.toneName}},{{item.toneId}}</h2>
+                </div>
+                <p class="leading-relaxed">Document Tones</p>
+            </div>
+            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+                <div *ngFor="let item of article.tonesAnalysis.sentenceTones">
+                    <h2 class="title-font font-medium text-3xl text-gray-900">{{item.text}},{{item.toneScores}}</h2>
+                </div>
+                <p class="leading-relaxed">Sentence Tones</p>
+            </div>
+            <hr>
+            <div class="w-full sm:p-4 px-4 mb-6">
+                <p>by:{{article.author}}</p>
+                <p>Published on:{{article.publishedDate}}</p>
+                <a [href]="article.urlPath"></a>
+                <div class="leading-relaxed">{{article.description}}</div>
+            </div>
+        </div>
+        <div class="lg:w-1/2 sm:w-1/3 w-full rounded-lg overflow-hidden mt-6 sm:mt-0">
+            <img class="object-cover object-center w-full h-full" [src]="article.imagePath" alt="stats">
+        </div>
+    </div>
+</section>

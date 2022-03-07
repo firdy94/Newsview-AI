@@ -1,0 +1,92 @@
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="assets/images/brain.png" class="w-auto h-14 text-black p-2">
+            <span class="ml-3 text-xl text-black p-2">Newsview AI</span>
+        </a>
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Usage</a>
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/search']">Search</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/query']">Query</a>
+
+        </nav>
+        <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" (click)="auth.logout({ returnTo: document.location.origin })">Logout
+            </button>
+        </ng-container>
+        <ng-template #loggedOut>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" (click)="auth.loginWithRedirect()">Login
+            </button>
+        </ng-template>
+    </div>
+</header>
+<section class="text-gray-600 body-font" *ngIf="!isAuthenticated;">
+    <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+            <img class="object-cover object-center rounded" alt="" src="assets/images/hero news.jpg">
+            <p class="text-center text-xs">Photo by <a href="https://unsplash.com/@obionyeador?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Obi
+                    Onyeador</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            </p>
+        </div>
+        <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">News has never been more important
+                <br class="hidden lg:inline-block">
+            </h1>
+            <p class="mb-8 leading-relaxed">Shaping our world views and opinions, it is no wonder fake news persists. But beyond that, there are a deeprooted congnitive biases within us humans which hinders informed decison making. Newsview AI addresses this through the use of Artificial
+                Intelligence to process news based on sentiments to detect bias.
+            </p>
+            <div class="flex justify-center">
+                <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" [routerLink]="['/login']">Login</button>
+                <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg" [routerLink]="['/about']">Learn more</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="text-gray-600 body-font" *ngIf="!isAuthenticated;">
+    <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Volatility in the real world has far-reaching impacts
+                <br class="hidden lg:inline-block">
+            </h1>
+            <p class="mb-8 leading-relaxed">Beyond painting a clear picture of world events and forming well-rounded views, Newsview AI helps users follow up on news which may significantly impact them through the global economy for instance.
+            </p>
+        </div>
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+            <img class="object-cover object-center rounded" alt="" src="assets/images/hero stocks.jpg">
+            <p class="text-center text-xs">Photo by <a href="https://unsplash.com/@nick604?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Nick
+                    Chong</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- <section class="flex items-center justify-center w-screen min-h-screen p-10">
+    <div class="flex flex-wrap flex-col sm:-m-4 -mx-4 -mb-10 -mt-4">
+        <div class="p-4 md:w-1/4 sm:mb-0 mb-6" *ngFor="let item of articles">
+            <div class="rounded-lg h-64 overflow-hidden">
+                <img alt="content" class="object-cover object-center h-full w-full" [src]="item.imagePath" (error)="updateUrl($event)">
+            </div>
+            <h2 class="text-xl font-medium title-font text-gray-900 mt-5">{{item.title}}</h2>
+            <p class="text-base leading-relaxed mt-2">{{item.author}}</p>
+            <p class="text-base leading-relaxed mt-2">{{item.description.slice(0,100)}}...</p>
+            <a class="text-indigo-500 inline-flex items-center mt-3" [routerLink]="['/']">Read More
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section> -->
+
+
+
+
+<!-- <ul *ngIf="auth.user$ | async as user">
+    <li>{{ user.name }}</li>
+    <li>{{ user.email }}</li>
+    <li>{{ user.updated_at }}</li>
+    <li>{{ user.nickname }}</li>
+</ul> -->

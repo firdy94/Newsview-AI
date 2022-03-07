@@ -1,0 +1,47 @@
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="assets/images/brain.png" class="w-auto h-14 text-black p-2">
+            <span class="ml-3 text-xl text-black p-2">Newsview AI</span>
+        </a>
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Use cases</a>
+            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/search']">Search</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/query']">Query</a>
+
+        </nav>
+        <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" (click)="auth.logout({ returnTo: document.location.origin })">Logout
+            </button>
+        </ng-container>
+        <ng-template #loggedOut>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" (click)="auth.loginWithRedirect()">Login
+            </button>
+        </ng-template>
+    </div>
+</header>
+<section class="text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto" *ngIf="auth.user$ | async as user">
+        <div class="flex flex-col text-center w-full mb-20">
+            <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Welcome, {{user.name | titlecase}}
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="flex items-center justify-center w-screen min-h-screen p-10">
+    <div class="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 max-w-6xl">
+        <div class="flex flex-col bg-gray-200 rounded-lg p-4 m-2" *ngFor="let item of articles">
+            <div class="h-40 bg-gray-400 rounded-lg">
+                <img alt="content" class="object-cover object-center h-full w-full" [src]="item.imagePath" (error)="updateUrl($event)">
+            </div>
+            <div class="flex flex-col items-start mt-4">
+                <h4 class="text-xl font-semibold">{{item.title.slice(0,30)}}...</h4>
+                <h2 class="text-xl font-semibold">{{item.author}}</h2>
+                <p class="text-sm">{{item.description.slice(0,100)}}...</p>
+                <a class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" (click)="onReadArticle(item.id)">Read Article</a>
+            </div>
+        </div>
+    </div>
+</section>

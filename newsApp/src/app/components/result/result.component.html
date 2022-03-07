@@ -1,0 +1,56 @@
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center bg-slate-700 rounded-b">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <img src="assets/images/brain.png" class="w-auto h-14 text-white p-2">
+            <span class="ml-3 text-xl text-white p-2">Newsview AI</span>
+        </a>
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['']">Home</a>
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['/usecases']">Use cases</a>
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['/search']">Search</a>
+            <a class=" mr-5 hover:text-white text-slate-300 " [routerLink]="[ '/about']">About</a>
+            <a class=" mr-5 hover:text-white text-slate-300 " [routerLink]="[ '/query']">About</a>
+        </nav>
+    </div>
+</header>
+<Button type="button" onclick="history.back()">Back</Button>
+<section class="text-gray-600 body-font">
+    <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col">
+                <div class="h-1 bg-gray-200 rounded overflow-hidden">
+                    <p>Positive Articles</p>
+                    <div class="w-24 h-full bg-indigo-500"></div>
+                </div>
+            </div>
+            <div class="flex flex-col bg-gray-200 rounded-lg p-4 m-2" *ngFor="let item of negArticles">
+                <div class="h-40 bg-gray-400 rounded-lg">
+                    <img alt="content" class="object-cover object-center h-full w-full" [src]="item.imagePath" (error)="updateUrl($event)">
+                </div>
+                <div class="flex flex-col items-start mt-4">
+                    <h4 class="text-xl font-semibold">{{item.title.slice(0,30)}}...</h4>
+                    <h2 class="text-xl font-semibold">{{item.author}}</h2>
+                    <p class="text-sm">{{item.description.slice(0,100)}}...</p>
+                    <a class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" (click)="onReadArticle(item.id)">Read Article</a>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="h-1 bg-gray-200 rounded overflow-hidden">
+                    <p>Negative Articles</p>
+                    <div class="w-24 h-full bg-indigo-500"></div>
+                </div>
+            </div>
+            <div class="flex flex-col bg-gray-200 rounded-lg p-4 m-2" *ngFor="let item of posArticles">
+                <div class="h-40 bg-gray-400 rounded-lg">
+                    <img alt="content" class="object-cover object-center h-full w-full" [src]="item.imagePath" (error)="updateUrl($event)">
+                </div>
+                <div class="flex flex-col items-start mt-4">
+                    <h4 class="text-xl font-semibold">{{item.title.slice(0,30)}}...</h4>
+                    <h2 class="text-xl font-semibold">{{item.author}}</h2>
+                    <p class="text-sm">{{item.description.slice(0,100)}}...</p>
+                    <a class="p-2 leading-none rounded font-medium mt-3 bg-gray-400 text-xs items-end justify-end" (click)="onReadArticle(item.id)">Read Article</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
