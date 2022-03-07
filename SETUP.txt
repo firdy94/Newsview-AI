@@ -1,0 +1,16 @@
+In order to deploy the application, the following information must first be gathered:
+
+1. Newsapi API key (newsAPiKey)
+2. IBM Natural Understanding Instance API Key (ibmapikey)
+3. IBM Natural Understanding Instance version (ibmversion)
+4. IBM Natural Unerstanding Instance URL (ibmurl)
+5. IBM Tone Analysis Instance API Key (ibmtoneapikey)
+6. IBM Tone Analysis Instance version (ibmtoneversion)
+7. IBM Tone Analysis Instance URL (ibmtoneurl)
+8.MongoDB URI (SPRING_DATA_MONGODB_URI)
+9.DigitalOcean MySQL Database username (SPRING_DATASOURCE_USERNAME)
+10. DigitalOcean MySQL Database password(SPRING_DATASOURCE_PASSWORD)
+11.Gmail App Password (SPRING_MAIL_PASSWORD)
+12.Gmail username (SPRING_MAIL_USERNAME)
+
+These values have to be set in heroku as config varsfor connection with the necessaryapis and databases. Upon successful connection and run, the user can log in through auth0 and access then services within

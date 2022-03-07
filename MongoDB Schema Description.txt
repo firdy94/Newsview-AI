@@ -1,0 +1,3 @@
+MongoDB Schema Description
+
+The MongoDb Schema for this project is as follows, there is a single database with a collection called “articles” where each new article Object which is fetched is saved in the that collection.
