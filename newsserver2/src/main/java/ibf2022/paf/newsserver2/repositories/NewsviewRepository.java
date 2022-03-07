@@ -32,7 +32,7 @@ public class NewsviewRepository {
 				Article article = articles.get(i);
 				ps.setString(1, article.getAuthor());
 				ps.setString(2, article.getDescription());
-				ps.setString(3, article.getId()); // TODO try string first
+				ps.setString(3, article.getId());
 				ps.setString(4, article.getImagePath());
 				ps.setString(5, article.getPublishedDate());
 				ps.setString(6, article.getTitle());

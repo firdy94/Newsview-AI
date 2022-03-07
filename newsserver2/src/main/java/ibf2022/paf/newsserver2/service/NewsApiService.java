@@ -47,7 +47,7 @@ public class NewsApiService {
 				.fromUriString("https://newsapi.org/v2/everything")
 				.queryParam("q", query)
 				.queryParam("from", maxDateSearch)
-				.queryParam("pageSize", 6)
+				.queryParam("pageSize", 4)
 				.queryParam("page", 1)
 				.queryParam("language", "en")
 				.queryParam("apiKey", apiKey)

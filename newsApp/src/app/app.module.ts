@@ -15,7 +15,6 @@ import { AuthModule } from '@auth0/auth0-angular';
 
 import { NewsService } from './new.service';
 import { HomeComponent } from './components/home/home.component';
-import { UsecaseComponent } from './components/usecase/usecase.component';
 import { ArticlesComponent } from './components/articles/articles.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 import { AuthGuardService } from './authguard.service';
@@ -25,11 +24,10 @@ import { QueryComponent } from './components/query/query.component';
 const appRoutes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuardService] },
   { path: "search", component: SearchComponent, canActivate: [AuthGuard] },
-  { path: "usecases", component: UsecaseComponent },
   { path: "landingpage", component: LandingpageComponent, canActivate: [AuthGuard] },
   { path: "query", component: QueryComponent },
   { path: "landingpage/:id", component: ArticlesComponent, canActivate: [AuthGuard] },
-  { path: "article/:query", component: ResultComponent, canActivate: [AuthGuard] },
+  { path: "result/:query", component: ResultComponent, canActivate: [AuthGuard] },
   { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] }
 ]
 
@@ -40,7 +38,6 @@ const appRoutes: Routes = [
     ResultComponent,
     FavoritesComponent,
     HomeComponent,
-    UsecaseComponent,
     ArticlesComponent,
     LandingpageComponent,
     QueryComponent
@@ -50,7 +47,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { useHash: true }),
+    RouterModule.forRoot(appRoutes),
     AuthModule.forRoot({
       domain: 'https://dev-3m7i45aa.us.auth0.com',
       clientId: 'fs8JpEFi6QwL63DwzNVGG83mynlgVHBW',
@@ -63,7 +60,18 @@ const appRoutes: Routes = [
         allowedList: [
           {
             // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-            uri: 'https://newsview-ai.herokuapp.com/*',
+            uri: 'https://newsview-ai-app.herokuapp.com/*',
+            tokenOptions: {
+              // The attached token should target this audience
+              audience: 'http://locahost:8080',
+
+              // The attached token should have these scopes
+              scope: 'read:current_user'
+            }
+          },
+          {
+            // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
+            uri: 'http://localhost:8080/*',
             tokenOptions: {
               // The attached token should target this audience
               audience: 'http://locahost:8080',

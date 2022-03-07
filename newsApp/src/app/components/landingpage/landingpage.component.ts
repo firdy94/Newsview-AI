@@ -36,12 +36,12 @@ export class LandingpageComponent implements OnInit {
     // this.articles = await this.newsSvc.getNews()
   }
 
-  onReadArticle(i: string) {
-    this.router.navigate(['/article', i]);
+  onReadArticle(id: string) {
+    this.router.navigate(['/landingpage', id]);
   }
 
-  onFavArticle(i: string) {
-    this.newsSvc.addFavArticles(i);
+  onFavArticle(id: string) {
+    this.newsSvc.addFavArticles(id);
     alert("Added to favourites!");
   }
 

@@ -5,9 +5,9 @@
             <span class="ml-3 text-xl text-black p-2">Newsview AI</span>
         </a>
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/usecases']">Use cases</a>
+            <a class="mr-5 hover:text-white text-slate-300" [routerLink]="['']">Home</a>
+
             <a class="mr-5 hover:text-black text-slate-700" [routerLink]="['/search']">Search</a>
-            <a class=" mr-5 hover:text-black text-slate-700" [routerLink]="[ '/about']">About</a>
         </nav>
         <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
             <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" (click)="auth.logout({ returnTo: document.location.origin })">Logout
@@ -19,7 +19,7 @@
         </ng-template>
     </div>
 </header>
-<section class="text-gray-600 body-font relative">
+<!-- <section class="text-gray-600 body-font relative">
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-col text-center w-full mb-12">
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h1>
@@ -29,12 +29,12 @@
             <div class="flex flex-wrap -m-2">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="auth.user$ | async as user">
                     <div class="p-2 w-1/2">
-                        <div class="relative" *ngIf="!(auth.isAuthenticated$ | async)">
+                        <div class="relative">
                             <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
                             <input formControlName="name" [value]="user.name ? user.name : null" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                     </div>
-                    <div class="p-2 w-1/2" *ngIf="!(auth.isAuthenticated$ | async)">
+                    <div class="p-2 w-1/2">
                         <div class="relative">
                             <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
                             <input formControlName="email" [value]="user.email ? user.email : null" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -47,10 +47,53 @@
                         </div>
                     </div>
                     <div class="p-2 w-full">
-                        <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit" [disabled]="form.invalid">Button</button>
+                        <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</section> -->
+
+
+
+
+
+
+<section class="text-gray-600 body-font relative">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Please enter your query and contact details below and we will get back to you as soon as we can.</p>
+        </div>
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="flex flex-wrap -m-2">
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+                            <input formControlName="name" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                            <input formControlName="email" type="text" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        </div>
+                    </div>
+                    <div class="p-2 w-full">
+                        <div class="relative">
+                            <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+                            <textarea formControlName="message" type="text" id="message" name="message" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                        </div>
+                    </div>
+                    <div class="p-2 w-full">
+                        <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
 </section>
+GitHub

@@ -10,7 +10,7 @@ public class SQL {
 
 	static final String SQL_DELETE_OLD_ARTICLES = "delete from articles WHERE url != 'dkhfksdfuhduciuduihhfsufh' and uploaded_at < (NOW() - INTERVAL 50 MINUTE)";
 
-	static final String SQL_INSERT_USER = "insert ignore into userinfo(id,email, name, nickname, url) values(?,?,?,?)";
+	static final String SQL_INSERT_USER = "insert ignore into userinfo(id, email, name, nickname) values(?,?,?,?)";
 	// static final String SQL_GET_USER_BY_NAME_EMAIL = "select * from userinfo
 	// where name = ? && email=? ";
 	static final String SQL_GET_USER_COUNT_BY_NAME_AND_EMAIL = " select count(name) from userinfo where name = ? and email=? ";

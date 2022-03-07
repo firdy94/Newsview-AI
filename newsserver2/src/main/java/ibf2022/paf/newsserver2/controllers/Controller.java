@@ -74,42 +74,48 @@ public class Controller {
 
 	@GetMapping("/search")
 	public ResponseEntity<String> getSearchSentiments(@RequestParam String query) {
+		System.out.println(query);
 		List<Article> articlesArray = new ArrayList<>();
 		String jsonResp = "";
+		// try {
+		// if (newsApiSvc.getNewsSearch(query).isEmpty() ||
+		// newsApiSvc.getNewsSearch(query).isBlank()) {
+		// return ResponseEntity.noContent().build();
+		// }
+
 		try {
-			if (newsApiSvc.getNewsSearch(query).isEmpty() ||
-					newsApiSvc.getNewsSearch(query).isBlank()) {
-				return ResponseEntity.noContent().build();
-			}
 			articlesArray = newsApiSvc.stringToArticles(
 					newsApiSvc.getNewsSearch(query)).get()
 					.stream().map(article -> article = newsviewSvc.articleSetSentimentAndTone(article.getId()))
 					.collect(Collectors.toList());
-			newsviewMongoRepo.saveAll(articlesArray); // TODO check for dups
-			articlesArray.sort(
-					(Article article1, Article article2) -> article1.getSentimentAnalysis().getSentiment().getScore()
-							.compareTo(article2.getSentimentAnalysis().getSentiment().getScore()));
-			Article[] negArticlesArray = articlesArray.stream().limit(3).collect(Collectors.toList())
-					.toArray(new Article[0]);
-			Collections.reverse(articlesArray);
-			Article[] posArticlesArray = articlesArray.stream().limit(3).collect(Collectors.toList())
-					.toArray(new Article[0]);
-
-			// .filter(article -> article.getSentimentAnalysis().getSentiment().getScore() <
-			// 0)
-			// .collect(Collectors.toList());
-			List<Article[]> allArticlesArray = new ArrayList<>();
-			allArticlesArray.add(negArticlesArray);
-			allArticlesArray.add(posArticlesArray);
-			jsonResp = newsviewSvc.articleArrayResp(allArticlesArray);
-			return ResponseEntity.ok(jsonResp);
+			newsviewMongoRepo.saveAll(articlesArray);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.noContent().build();
 		}
-	}
 
-	// @RequestHeader("accept-language") String language add to login method
+		articlesArray.sort(
+				(Article article1, Article article2) -> article1.getSentimentAnalysis().getSentiment().getScore()
+						.compareTo(article2.getSentimentAnalysis().getSentiment().getScore()));
+		Article[] negArticlesArray = articlesArray.stream().limit(3).collect(Collectors.toList())
+				.toArray(new Article[0]);
+		Collections.reverse(articlesArray);
+		Article[] posArticlesArray = articlesArray.stream().limit(3).collect(Collectors.toList())
+				.toArray(new Article[0]);
+
+		List<Article[]> allArticlesArray = new ArrayList<>();
+		allArticlesArray.add(negArticlesArray);
+		allArticlesArray.add(posArticlesArray);
+
+		jsonResp = newsviewSvc.articleArrayResp(allArticlesArray);
+		return ResponseEntity.ok(jsonResp);
+		// }catch(
+
+		// Exception e)
+		// {
+		// e.printStackTrace();
+		// return ResponseEntity.noContent().build();
+		// }
+	}
 
 	@GetMapping("/login")
 	public ResponseEntity<String> getArticles(@RequestHeader("authorization") String header) {
@@ -132,7 +138,6 @@ public class Controller {
 			e.printStackTrace();
 			return ResponseEntity.internalServerError().build();
 		}
-		// newsviewMongoRepo.newsviewRepo.addArticles(articlesArray);
 		return ResponseEntity.ok(jsonResp);
 	}
 

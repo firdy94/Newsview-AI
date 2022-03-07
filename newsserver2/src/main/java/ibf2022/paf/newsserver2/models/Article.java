@@ -28,6 +28,8 @@ public class Article {
 	private TonesAnalysis tonesAnalysis;
 
 	public Article() {
+		this.id = UUID.randomUUID().toString();
+
 	}
 
 	public Article(String website, String author, String title, String description, String urlPath, String imagePath,
@@ -149,6 +151,7 @@ public class Article {
 		}
 		String urlImage = Article.normaliseString(article.get("urlToImage").toString());
 		String publishedAt = Article.normaliseString(article.get("publishedAt").toString());
+		Article articleObj = new Article();
 		return new Article(name, author, title, description, url, urlImage, publishedAt);
 	}
 
@@ -157,8 +160,9 @@ public class Article {
 
 		for (Article article : articles) {
 			JsonObject obj = Json.createObjectBuilder()
+					.add("id", article.getId())
 					.add("website", article.getWebsite())
-					.add("title", article.getAuthor())
+					.add("author", article.getAuthor())
 					.add("title", article.getTitle())
 					.add("description", article.getDescription())
 					.add("urlPath", article.getUrlPath())
