@@ -29,17 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().and().authorizeRequests() // configurationSource(corsConfigurationSource())
-				.mvcMatchers(HttpMethod.GET, "/api/*").permitAll() // GET requests
+		http.cors().configurationSource(corsConfigurationSource()).and().csrf().and().authorizeRequests()
+				// .mvcMatchers(HttpMethod.GET, "/api/*").permitAll() // GET requests
 				// // don't need auth
-				// .antMatchers("/assets/**").permitAll()
-				// .antMatchers("/assets/manifest.json").permitAll()
-				// .antMatchers("/css/**").permitAll()
-				// .antMatchers("/favicon/**").permitAll()
-				// .antMatchers("/js/**").permitAll()
+				.antMatchers("/assets/**").permitAll()
+				.antMatchers("/assets/manifest.json").permitAll()
+				.antMatchers("/css/**").permitAll()
+				.antMatchers("/favicon/**").permitAll()
+				.antMatchers("/js/**").permitAll()
 				// // .antMatchers("/assets/**").permitAll()
 
-				// .mvcMatchers(HttpMethod.GET, "/").permitAll()
+				.mvcMatchers(HttpMethod.GET, "/").permitAll()
 
 				.mvcMatchers(HttpMethod.GET, "/api/private").authenticated()
 				// secure api with admin-scope
@@ -51,18 +51,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.jwt();
 	}
 
-	// @Bean
-	// CorsConfigurationSource corsConfigurationSource() {
-	// CorsConfiguration configuration = new CorsConfiguration();
-	// configuration
-	// .setAllowedOrigins(Arrays.asList("https://newsview-ai-app.herokuapp.com",
-	// "http://localhost:8080"));
-	// configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
-	// UrlBasedCorsConfigurationSource source = new
-	// UrlBasedCorsConfigurationSource();
-	// source.registerCorsConfiguration("/**", configuration);
-	// return source;
-	// }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration
+				.setAllowedOrigins(Arrays.asList("https://newsview-ai-app.herokuapp.com",
+						"http://localhost:8080"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
 	JwtDecoder jwtDecoder() {
 		OAuth2TokenValidator<Jwt> withAudience = new AudienceValidator(audience);

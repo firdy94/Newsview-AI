@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-	// @Value("${SPRING_MAIL_USERNAME}")
-	@Value("${spring.mail.username")
+	@Value("${SPRING_MAIL_USERNAME}")
+	// @Value("${spring.mail.username")
 	private String username;
 
-	@Value("${spring.mail.password}")
+	@Value("${SPRING_MAIL_PASSWORD}")
 	private String password;
 
 	@Value("${spring.mail.host}")
