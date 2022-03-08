@@ -47,7 +47,7 @@ public class NewsApiService {
 				.fromUriString("https://newsapi.org/v2/everything")
 				.queryParam("q", query)
 				.queryParam("from", maxDateSearch)
-				.queryParam("pageSize", 4)
+				.queryParam("pageSize", 2)
 				.queryParam("page", 1)
 				.queryParam("language", "en")
 				.queryParam("apiKey", apiKey)
@@ -73,7 +73,7 @@ public class NewsApiService {
 				.fromUriString("https://newsapi.org/v2/top-headlines")
 				// .queryParam("from", maxDateSearch)
 				.queryParam("language", "en")
-				.queryParam("pageSize", "5") // TODO change to 20 once prod
+				.queryParam("pageSize", "6")
 				.queryParam("country", "sg")
 				.queryParam("apiKey", apiKey)
 				.toUriString();

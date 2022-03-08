@@ -1,0 +1,1 @@
+web java --add-opens java.base/java.lang=ALL-UNNAMED -Dserver.port=$PORT $JAVA_OPTS -jar target/newsserver2-0.0.1-SNAPSHOT.jar

@@ -15,6 +15,7 @@ public class EmailService {
 	private String username;
 
 	@Value("${SPRING_MAIL_PASSWORD}")
+	// @Value("${spring.mail.username")
 	private String password;
 
 	@Value("${spring.mail.host}")
